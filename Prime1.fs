@@ -1,41 +1,60 @@
 module Prime1
 
-    let primes0 num =
+let rec rangeCheck seed curr limit =
+    let primeCheck seed num =
+        Array.forall (fun p -> num % p <> 0) seed
 
-        let primeCheck ps num =
-            List.forall (fun p -> num % p <> 0) ps
-
-        let primeComb ps num =
-            if primeCheck ps num then
-                num::ps
-            else
-                ps
-
-        List.fold primeComb [] [2..num]
-
-    let primes num =
-        if num < 2 then
-            []
+    let primeAppend seed num =
+        if primeCheck seed num then
+            Array.append seed [| num |]
         else
-            primes0 num
+            seed
 
-    open System
+    if curr >= limit then
+        seed
+    else
+        rangeCheck (primeAppend seed curr) (curr + 1) limit
 
-    let main (argv: string array) =
-        let line = Console.ReadLine()
-        let count = int line
-        for ignore = 1 to count do
-            let line = Console.ReadLine().Split [|' '|]
-            let min = int line.[0]
-            let max = int line.[1]
-            let primes = List.rev (primes max)
-            for prime in primes do
-                if prime >= min then
-                    printf "%d\n" prime
-            printf "\n"
-        0
+let primes0 min max =
 
-    [||] |> main |> exit
+    let mid = sqrt (double max) |> int
+    let mid = List.min [ mid; (min - 1) ]
+
+    let seed = rangeCheck [||] 2 (mid + 1)
+    let seedLen = seed.Length
+
+    let primes = rangeCheck seed min (max + 1)
+    Array.sub primes seedLen (primes.Length - seedLen)
+
+let primes min max =
+    let min = List.max [ 2; min ]
+
+    if min > max then
+        [||]
+    else
+        primes0 min max
+
+open System
+
+let main (argv: string array) =
+    let line = Console.ReadLine()
+    let count = int line
+
+    for ignore = 1 to count do
+        let line = Console.ReadLine().Split [| ' ' |]
+        let min = int line.[0]
+        let max = int line.[1]
+        let min = List.max [ min; 2 ]
+        let primes = primes min max
+
+        for prime in primes do
+            printf "%d\n" prime
+
+        printf "\n"
+
+    0
+
+[||] |> main |> exit
 
 (*
 package main

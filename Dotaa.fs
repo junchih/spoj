@@ -1,31 +1,34 @@
 module Dotaa
 
-    let tryPassHeros towers damage heros =
-        let passCounts = List.map (fun hero -> (hero - 1) / damage) heros
-        (List.sum passCounts) >= towers
+let tryPassHeros towers damage heros =
+    let passCounts =
+        List.map (fun hero -> (hero - 1) / damage) heros
 
-    let toYN b =
-        if b then
-            "YES"
-        else
-            "NO"
+    (List.sum passCounts) >= towers
 
-    open System
+let toYN b = if b then "YES" else "NO"
 
-    let main (argv: string array) =
-        let count = Console.ReadLine() |> int
-        for ignore = 1 to count do
-            let line = Console.ReadLine().Split [|' '|]
-            let heroCount = int line.[0]
-            let towers = int line.[1]
-            let damage = int line.[2]
-            let heros = [for ignore = 1 to heroCount do
-                            yield Console.ReadLine() |> int]
-            let ok = tryPassHeros towers damage heros |> toYN
-            printf "%s\n" ok
-        0
+open System
 
-    [||] |> main |> exit
+let main (argv: string array) =
+    let count = Console.ReadLine() |> int
+
+    for ignore = 1 to count do
+        let line = Console.ReadLine().Split [| ' ' |]
+        let heroCount = int line.[0]
+        let towers = int line.[1]
+        let damage = int line.[2]
+
+        let heros =
+            [ for ignore = 1 to heroCount do
+                  yield Console.ReadLine() |> int ]
+
+        let ok = tryPassHeros towers damage heros |> toYN
+        printf "%s\n" ok
+
+    0
+
+[||] |> main |> exit
 
 (*
 module Dotaa where
