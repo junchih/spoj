@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Dotaa.fs" />
     <Compile Include="Prime1.fs" />
+    <Compile Include="Acode.fs" />
   </ItemGroup>
 
 </Project>
