@@ -9,6 +9,7 @@
     <Compile Include="Dotaa.fs" />
     <Compile Include="Prime1.fs" />
     <Compile Include="Acode.fs" />
+    <Compile Include="Elis.fs" />
   </ItemGroup>
 
 </Project>
